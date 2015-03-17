@@ -37,6 +37,26 @@ class UTC(datetime.tzinfo):
 utc = UTC()
 
 
+class FixedOffset(datetime.tzinfo):
+    """
+    A FixedOffset, similar to the one found in bson.tz_util
+    """
+    def __init__(self, offset):
+        self.offset = datetime.timedelta(offset)
+
+    def __getinitargs__(self):
+        return self.offset,
+
+    def utcoffset(self, dt):
+        return self.offset
+
+    def tzname(self, dt):
+        return 'name'
+
+    def dst(self, dt):
+        return datetime.timedelta(0)
+
+
 class TimestampedVariable(object):
     def __init__(self, value=None):
         self._value = value
@@ -250,6 +270,13 @@ class DateTimeAdvancedTestCase(unittest.TestCase):
         expect = datetime_dict
         actual = jsonpickle.decode(pickled, keys=True)
         self.assertEqual(expect, actual)
+
+    def test_datetime_with_fixed_offset(self):
+        fo = FixedOffset(-60)
+        dt = datetime.datetime.now().replace(tzinfo=fo)
+        pickled = jsonpickle.encode(dt)
+        restored = jsonpickle.decode(pickled)
+        self.assertEqual(dt, restored)
 
 
 def suite():
