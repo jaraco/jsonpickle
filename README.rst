@@ -6,9 +6,6 @@
 
 .. _PyPI link: https://pypi.org/project/jsonpickle
 
-.. image:: https://dev.azure.com/jaraco/jsonpickle/_apis/build/status/jaraco.jsonpickle?branchName=master
-   :target: https://dev.azure.com/jaraco/jsonpickle/_build/latest?definitionId=1&branchName=master
-
 .. image:: https://readthedocs.org/projects/jsonpickle/badge/?version=latest
    :target: https://jsonpickle.readthedocs.io/en/latest/?badge=latest
 
